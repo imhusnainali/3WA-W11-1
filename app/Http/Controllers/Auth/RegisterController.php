@@ -49,9 +49,26 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'name' => 'required',
+            'surname' => 'required',
+            'birthday' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            'zip' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+
+            // 'name' => 'required|string|max:255',
+            // 'surname' => 'required|string|max:255',
+            // 'birthday' => 'required',
+            // 'phone' => 'required|numeric',
+            // 'address' => 'required|string|max:255',
+            // 'city' => 'required|string|max:255',
+            // 'zip' => 'required|numeric',
+            // 'email' => 'required|string|email|max:255|unique:users',
+            // 'password' => 'required|string|min:6|confirmed',
         ]);
     }
 
@@ -65,6 +82,13 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'surname' => $data['surname'],
+            'birthday' => $data['birthday'],
+            'phone' => $data['phone'],
+            'address' => $data['address'],
+            'city' => $data['city'],
+            'zip' => $data['zip'],
+            'country' => $data['country'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

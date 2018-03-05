@@ -17,9 +17,9 @@ class CreateCartsTable extends Migration
             $table->increments('id');
 
             $table->string('token', 255);
-            $table->integer('client_id')->nullable()->unsigned();
-            $table->integer('order_id')->nullable()->unsigned();
-            $table->integer('dish_id')->nullable()->unsigned();
+            $table->integer('clientId')->nullable()->unsigned();
+            $table->integer('orderId')->nullable()->unsigned();
+            $table->integer('dishId')->nullable()->unsigned();
 
             $table->softDeletes();
             $table->timestamps();
