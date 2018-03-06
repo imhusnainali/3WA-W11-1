@@ -14,7 +14,8 @@
 
 
         <div class="card-block" >
-            <form onsubmit="addToCart()">
+            <form action="{{ route('carts.store') }}" method="post">
+                @csrf
                 <input type="text" name="dishId" value="{{ $dish->id }}" hidden>
                 <input type="text" name="clientId" value="1" hidden>
                 <button type="submit">Add To Cart</button>

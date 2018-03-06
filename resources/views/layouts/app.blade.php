@@ -27,7 +27,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li>
+                            <a class="nav-link" href="{{ route('dishes.index') }}">Dishes</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('contacts') }}">Contacts</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -43,16 +48,27 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route( 'users.edit', Auth::id() ) }}">User profile</a>
+
+                                    @if(Auth::user()->role == 'admin')
+                                        <a class="dropdown-item" href="{{ route( 'users.index') }}">All registered users</a>
+                                    @endif
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                document.getElementById('logout-form').submit();">
                                         Logout
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+
                                 </div>
+                            </li>
+
+                            <li>
+                                <a class="nav-link" href="{{ route('carts.index') }}"> Cart (<span id="cartContent">0</span>) - <span id="cartTotal">0.00</span> Eur</a>
                             </li>
                         @endguest
                     </ul>

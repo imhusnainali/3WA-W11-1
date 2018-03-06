@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Cart;
+use App\User;
 use Illuminate\Http\Request;
 
-class CartsController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $carts = Cart::where('token',csrf_token())->get();
-        return view('carts.index', compact('carts'));
+        $users = User::all();
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -36,49 +36,39 @@ class CartsController extends Controller
      */
     public function store(Request $request)
     {
-
-        $cart = new Cart;
-
-        $cart->token = $request->_token;
-        $cart->dishId = $request->dishId;
-        $cart->clientId = $request->clientId;
-
-        $cart->save();
-
-        return redirect()->route('dishes.index');
-
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cart  $cart
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Cart $cart)
+    public function show(User $user)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cart  $cart
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cart $cart)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit',compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cart  $cart
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -86,10 +76,10 @@ class CartsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cart  $cart
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cart $cart)
+    public function destroy(User $user)
     {
         //
     }
