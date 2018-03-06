@@ -36,17 +36,11 @@ class CartsController extends Controller
      */
     public function store(Request $request)
     {
-
         $cart = new Cart;
-
         $cart->token = $request->_token;
         $cart->dishId = $request->dishId;
         $cart->clientId = $request->clientId;
-
         $cart->save();
-
-        return redirect()->route('dishes.index');
-
     }
 
     /**
@@ -91,6 +85,8 @@ class CartsController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
+        $cart = Cart::find($cart -> id);
+        $cart -> delete();
+        return redirect()->route('carts.index');
     }
 }

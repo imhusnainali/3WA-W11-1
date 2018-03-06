@@ -14,11 +14,12 @@
 
 
         <div class="card-block" >
-            <form action="{{ route('carts.store') }}" method="post">
+            <form class="dishAJAX">
                 @csrf
                 <input type="text" name="dishId" value="{{ $dish->id }}" hidden>
+                <input type="text" name="dishPrice" value="{{ $dish -> price }}" hidden>
                 <input type="text" name="clientId" value="1" hidden>
-                <button type="submit">Add To Cart</button>
+                <input type="submit" class="btn btn-primary" value="Add To Cart">
             </form>
         </div>
 

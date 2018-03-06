@@ -16,7 +16,13 @@
                         <div class="col-4">
                             <h4>Title: {{ $cart->dishes()->title }}</h4>
                             <p>Price: {{ $cart->dishes()->price }} Eur</p>
-                            <button type="submit" class="btn btn-danger" name="button">Remove from cart</button>
+
+                            <form action="{{ route('carts.destroy', $cart->id ) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger col-12" type="submit" name="button">Remove from cart</button>
+                            </form>
+                            
                         </div>
                         <div class="col-8">
                             <p>Description: {{ $cart->dishes()->description }}</p>

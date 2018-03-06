@@ -68,7 +68,7 @@
                             </li>
 
                             <li>
-                                <a class="nav-link" href="{{ route('carts.index') }}"> Cart (<span id="cartContent">0</span>) - <span id="cartTotal">0.00</span> Eur</a>
+                                <a class="nav-link" href="{{ route('carts.index') }}"> Cart (<span id="cartContent"> {{ Helpers::cartTotal() }} </span>) - <span id="cartTotal">{{ Helpers::cartSum() }}</span> Eur</a>
                             </li>
                         @endguest
                     </ul>
