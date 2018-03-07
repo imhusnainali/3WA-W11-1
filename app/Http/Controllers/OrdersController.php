@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Order;
+use App\Cart;
+use Helpers;
+use Illuminate\Support\Facades\Auth; // ADDING AUTH CLASS //
 
 class OrdersController extends Controller
 {
@@ -34,7 +38,24 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // CHECK IF CART IS NOT EMPTY
+
+
+        // CREATE NEW INSTANCE
+        $order = new Order;
+
+        // ADD DATA
+        $order->clientId = Auth::user()->id;
+        $order->amount = Helpers::cartSum();
+        $order->tax_amount = Helpers::cartVAT();
+
+        // SAVE
+        $order->save();
+
+        // GET INSERTED ORDER ID
+        Cart::whereNull('orderId')->where('token', $request->_token)->update(['orderId' => $order->id]);
+
+        return redirect()->route('dishes.index');
     }
 
     /**

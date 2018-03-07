@@ -16,15 +16,17 @@ class ReservationsController extends Controller
      */
     public function index()
     {
-        if(isset(Auth::user()->id) && !Auth::user()->role == 'admin'){
-            $reservations = Reservation::where('clientId',Auth::user()->id)->get();
-            return view ('reservations.index',compact('reservations'));
-        }elseif(Auth::user()->role == 'admin'){
-            $reservations = Reservation::all();
-            return view ('reservations.index',compact('reservations'));
-        }else{
-            return view ('reservations.index');
+        $reservations = [];
+
+        if(Auth::check()){
+            if(Auth::user()->role == 'admin'){
+                $reservations = Reservation::all();
+            }else{
+                $reservations = Reservation::where('clientId',Auth::user()->id)->get();
+            }
         }
+
+        return view ('reservations.index', compact('reservations'));
     }
 
     /**
@@ -63,8 +65,8 @@ class ReservationsController extends Controller
         // ADD CONFIRMATION MESSAGE
         $request->session()->flash('status', 'Task was successful!');
 
-        $reservations = Reservation::where('clientId',Auth::user()->id);
-        return view ('reservations.index', compact('reservations'));
+        // REDIRECT TO INDEX ROUTE
+        return redirect()->route('reservations.index');
     }
 
     /**
@@ -98,7 +100,8 @@ class ReservationsController extends Controller
      */
     public function update(Request $request, Reservation $reservation)
     {
-        //
+        Reservation::where('id', $reservation->id)->update(['confirmed' => $request->confirmed]);
+        return redirect()->route('reservations.index');
     }
 
     /**
@@ -109,6 +112,8 @@ class ReservationsController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
-        //
+        $reservation = Reservation::find($reservation -> id);
+        $reservation -> delete();
+        return redirect()->route('reservations.index');
     }
 }

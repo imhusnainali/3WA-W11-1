@@ -45,7 +45,12 @@
                     </tbody>
                 </table>
             </div>
-            <button class="btn btn-warning col-12" type="button" name="button">Checkout</button>
+
+            <form class="col-12" action="{{ route('orders.store')}}" method="post">
+                @csrf
+                <button class="btn btn-warning col-12" type="submit">Checkout</button>
+            </form>
+
         </div>
     </div>
 

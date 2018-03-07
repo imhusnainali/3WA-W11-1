@@ -56,7 +56,7 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route( 'users.edit', Auth::id() ) }}">User profile</a>
 
-                                    @if(Auth::user()->role == 'admin')
+                                    @if(Auth::check() && Auth::user()->role == 'admin')
                                         <a class="dropdown-item" href="{{ route( 'users.index') }}">All registered users</a>
                                     @endif
 
@@ -72,11 +72,10 @@
 
                                 </div>
                             </li>
-
-                            <li>
-                                <a class="nav-link" href="{{ route('carts.index') }}"> Cart (<span id="cartContent"> {{ Helpers::cartTotal() }} </span>) - <span id="cartTotal">{{ Helpers::cartSum() }}</span> Eur</a>
-                            </li>
                         @endguest
+                        <li>
+                            <a class="nav-link" href="{{ route('carts.index') }}"> Cart (<span id="cartContent"> {{ Helpers::cartTotal() }} </span>) - <span id="cartTotal">{{ Helpers::cartSum() }}</span> Eur</a>
+                        </li>
                     </ul>
                 </div>
             </div>

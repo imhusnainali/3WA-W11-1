@@ -22,62 +22,95 @@
             @endif
 
             <!-- DISPLAY ALL USERS RESERVATIONS -->
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Client</th>
-
-                        @if(Auth::user()->role=='admin')
-                        <th>Phone</th>
-                        @endif
-
-                        <th>Table</th>
-                        <th>Visitors</th>
-                        <th>Reserved date</th>
-                        <th>Status</th>
-
-                        @if(Auth::user()->role=='admin')
-                        <th>Action</th>
-                        @endif
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($reservations as $reservation)
+            @if(count($reservations) > 0)
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>{{ $reservation->id }}</td>
-                            <td>{{ $reservation->users()->name }} {{ $reservation->users()->surname }}</td>
+                            <th>ID</th>
+                            <th>Client</th>
 
-                            @if(Auth::user()->role=='admin')
-                            <th>{{ $reservation->users()->phone }}</th>
+                            @if(Auth::check() && Auth::user()->role == 'admin')
+                            <th>Phone</th>
                             @endif
 
-                            <td>{{ $reservation->reservedTableId }}</td>
-                            <td>{{ $reservation->visitors }}</td>
-                            <td>{{ $reservation->reservation_time }}</td>
-                            <td>
-                                @if($reservation->confirmed == 0)
-                                    <span class="badge badge-secondary">Unconfirmed</span>
-                                @else
-                                    <span class="badge badge-success">Confirmed</span>
-                                @endif
-                            </td>
+                            <th>Table</th>
+                            <th>Visitors</th>
+                            <th>Reserved date</th>
+                            <th>Status</th>
 
-                            <td>
-                                <a class="btn btn-warning" href="#">Confirm</a>
-                                <a class="btn btn-danger" href="#">Delete</a>
-
-                            </td>
+                            @if(Auth::user()->role=='admin')
+                            <th>Action</th>
+                            @endif
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                            @foreach($reservations as $reservation)
+                                <tr>
+                                    <td>{{ $reservation->id }}</td>
+                                    <td>{{ $reservation->users()->name }} {{ $reservation->users()->surname }}</td>
 
-            <!-- DISPLAY ADD RESERVATION BUTTON -->
-            <div class="row">
-                <a class="btn btn-secondary col-12" href="{{ route('reservations.create') }}">Add reservation</a>
-            </div>
+                                    @if(Auth::user()->role=='admin')
+                                    <th>{{ $reservation->users()->phone }}</th>
+                                    @endif
+
+                                    <td>{{ $reservation->reservedTableId }}</td>
+                                    <td>{{ $reservation->visitors }}</td>
+                                    <td>{{ $reservation->reservation_time }}</td>
+                                    <td>
+                                        @if($reservation->confirmed == 0)
+                                            <span class="badge badge-secondary">Unconfirmed</span>
+                                        @else
+                                            <span class="badge badge-success">Confirmed</span>
+                                        @endif
+                                    </td>
+
+                                    <td>
+                                        <!-- DELETE RESERVATION -->
+                                            <form class="d-inline-block" action="{{ route('reservations.destroy', $reservation->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="btn btn-danger" type="submit" name="button">Delete</button>
+                                            </form>
+                                        <!-- END DELETE RESERVATION -->
+
+                                        <!-- CONFIRM RESERVATION -->
+                                        @if(Auth::check() && Auth::user()->role == 'admin' && $reservation->confirmed == 0)
+                                            <form class="d-inline-block" action="{{ route('reservations.update',$reservation->id) }}" method="post">
+                                                @csrf
+                                                @method('put')
+                                                <input type="text" name="confirmed" value="1" hidden>
+                                                <button class="btn btn-success" type="submit" name="button">Confirm</button>
+                                            </form>
+                                        @endif
+                                        <!-- END CONFIRM RESERVATION -->
+
+                                        <!-- REMOVE CONFIRMATION -->
+                                        @if(Auth::check() && Auth::user()->role == 'admin' && $reservation->confirmed == 1)
+                                            <form class="d-inline-block" action="{{ route('reservations.update',$reservation->id) }}" method="post">
+                                                @csrf
+                                                @method('put')
+                                                <input type="text" name="confirmed" value="0" hidden>
+                                                <button class="btn btn-warning" type="submit" name="button">Unconfirm</button>
+                                            </form>
+                                        @endif
+                                        <!-- END REMOVE CONFIRMATION -->
+
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                    </tbody>
+                </table>
+            @endif
+
+            <!-- ADD RESERVATION BUTTON -->
+            @if(Auth::check() && Auth::user()->role != 'admin')
+                <div class="row">
+                    <a class="btn btn-secondary col-12" href="{{ route('reservations.create') }}">Add reservation</a>
+                </div>
+            @endif
+            <!-- END ADD RESERVATION BUTTON -->
+
         @endif
-
     </div>
 @endsection

@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Dish;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // ADDING AUTH CLASS //
+use Illuminate\Database\Eloquent\SoftDeletes; // ADDING AUTH CLASS //
 
 class DishesController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('admin')->except('index','show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +44,7 @@ class DishesController extends Controller
      */
     public function create()
     {
-        //
+        echo 'create dish';
     }
 
     /**
@@ -94,6 +100,8 @@ class DishesController extends Controller
      */
     public function destroy(Dish $dish)
     {
-        //
+        $dish = Dish::find($dish -> id);
+        $dish -> delete();
+        return redirect()->route('dishes.index');
     }
 }

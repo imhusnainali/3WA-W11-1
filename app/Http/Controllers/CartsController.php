@@ -14,7 +14,7 @@ class CartsController extends Controller
      */
     public function index(Request $request)
     {
-        $carts = Cart::where('token',csrf_token())->get();
+        $carts = Cart::whereNull('orderId')->where('token',csrf_token())->get();
         return view('carts.index', compact('carts'));
     }
 
