@@ -31,6 +31,12 @@
                             <a class="nav-link" href="{{ route('dishes.index') }}">Dishes</a>
                         </li>
                         <li>
+                            <a class="nav-link" href="#">Orders</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('reservations.index') }}">Reservations</a>
+                        </li>
+                        <li>
                             <a class="nav-link" href="{{ route('contacts') }}">Contacts</a>
                         </li>
                     </ul>

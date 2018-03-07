@@ -23,3 +23,4 @@ Route::resource('/orders', 'OrdersController');
 Route::resource('/dishes', 'DishesController');
 Route::resource('/carts', 'CartsController');
 Route::resource('/users', 'UsersController');
+Route::resource('/reservations', 'ReservationsController');

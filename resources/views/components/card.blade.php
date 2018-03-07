@@ -14,13 +14,20 @@
 
 
         <div class="card-block" >
-            <form class="dishAJAX">
+            <form class="dishAJAX d-inline-block">
                 @csrf
                 <input type="text" name="dishId" value="{{ $dish->id }}" hidden>
                 <input type="text" name="dishPrice" value="{{ $dish -> price }}" hidden>
                 <input type="text" name="clientId" value="1" hidden>
                 <input type="submit" class="btn btn-primary" value="Add To Cart">
             </form>
+
+            {{-- @if(Auth::user()->role == 'admin') --}}
+                <a href="#" >
+                    <button class="btn btn-danger" type="button" name="button">Edit dish</button>
+                </a>
+            {{-- @endif --}}
+
         </div>
 
 </div>

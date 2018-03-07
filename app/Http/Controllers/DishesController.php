@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dish;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // ADDING AUTH CLASS //
 
 class DishesController extends Controller
 {
@@ -12,8 +13,20 @@ class DishesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // PHP SESSIONS
+        // session_start();
+        // echo $_SESSION['user_id'];
+
+        // LARAVEL SESSIONS
+        // dd($request->session());
+        // if(isset(Auth::user()->id)){
+        //     echo Auth::user()->id;
+        // }else{
+        //     echo 'guest';
+        // }
+
         $dishes = Dish::all();
         return view('dishes.index', compact('dishes'));
     }

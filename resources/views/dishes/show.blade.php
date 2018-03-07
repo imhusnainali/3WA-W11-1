@@ -36,19 +36,13 @@
 
         <div class="row">
             <div class="col-12">
-                <form id="form{{ $dish->id }}" onsubmit="addToCart({{ $dish->id }})">
+                <form class="dishAJAX">
                     @csrf
                     <input type="text" name="dishId" value="{{ $dish->id }}" hidden>
+                    <input type="text" name="dishPrice" value="{{ $dish -> price }}" hidden>
                     <input type="text" name="clientId" value="1" hidden>
                     <input type="submit" class="btn btn-primary" value="Add To Cart">
                 </form>
-
-                @if(Auth::user()->role == 'admin')
-                    <a href="#">
-                        <button class="btn btn-danger" type="button" name="button">Edit dish</button>
-                    </a>
-                @endif
-
             </div>
         </div>
 

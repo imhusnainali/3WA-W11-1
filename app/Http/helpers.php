@@ -22,6 +22,11 @@
 
             return $cartSum;
         }
+
+        public static function cartVAT(){
+            $cartVAT = Helpers::cartSum() * 0.21;
+            return $cartVAT;
+        }
     }
 
 ?>
