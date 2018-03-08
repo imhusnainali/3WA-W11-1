@@ -21,7 +21,7 @@
             </form>
 
         @if(Auth::check() && Auth::user()->role == 'admin')
-            <a href="#" >
+            <a href="{{ route('dishes.edit', $dish->id)}}" >
                 <button class="btn btn-warning" type="button" name="button">Edit dish</button>
             </a>
 

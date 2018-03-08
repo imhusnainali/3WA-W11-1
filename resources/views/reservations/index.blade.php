@@ -3,11 +3,6 @@
 @section('content')
 
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h3>Reservations</h3>
-            </div>
-        </div>
 
         @if(!Auth::user())
             <div class="row">
@@ -16,6 +11,7 @@
                 </div>
             </div>
         @else
+
             <!-- ADD SUCCESS MESSAGE IF RESERVATION WAS ADDDED -->
             @if(Request::session()->get('status'))
                 <h4>{{ Request::session()->get('status') }}</h4>
@@ -23,6 +19,12 @@
 
             <!-- DISPLAY ALL USERS RESERVATIONS -->
             @if(count($reservations) > 0)
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Reservations</h3>
+                    </div>
+                </div>
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -101,6 +103,12 @@
 
                     </tbody>
                 </table>
+            @else
+                <div class="row">
+                    <div class="col-12">
+                        <h3>You do not have any reservations</h3>
+                    </div>
+                </div>
             @endif
 
             <!-- ADD RESERVATION BUTTON -->

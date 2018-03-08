@@ -6,18 +6,20 @@
 
     class Helpers {
 
+        // STATIC FUNCTION DOES NOT REQUIRE AN INSTANCE
+
         public static function cartTotal(){
             $token = csrf_token();
-            return Cart::where('token',$token)->count();
+            return Cart::whereNull('orderId')->where('token',$token)->count();
         }
 
         public static function cartSum(){
             $cartSum = 0;
             $token = csrf_token();
-            $dishes = Cart::whereNull('orderId')->where('token',$token)->get();
+            $items = Cart::whereNull('orderId')->where('token',$token)->get();
 
-            foreach($dishes as $dish){
-                $cartSum = $cartSum + Dish::where('id',$dish->dishId)->first()->price;
+            foreach($items as $item){
+                $cartSum = $cartSum + $item->dishes()->price;
             }
 
             return $cartSum;

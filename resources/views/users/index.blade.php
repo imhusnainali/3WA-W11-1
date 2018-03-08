@@ -26,7 +26,7 @@
                             <td>{{ $user -> role }}</td>
 
                             <td>
-                                <a href="#"><button type="button" class="btn btn-warning">Reservations</button></a>
+                                <a href="reservations/{{ $user -> id }}"><button type="button" class="btn btn-warning">Reservations</button></a>
                                 <a href="#"><button type="button" class="btn btn-warning">Orders</button></a>
                                 <a href="{{ route('users.edit',$user -> id )}}"><button type="button" class="btn btn-warning">Profile</button></a>
                             </td>

@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Auth; // ADDING AUTH CLASS //
 
 class OrdersController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('user')->except('index');
+        $this->middleware('admin')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +23,16 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        echo 'index';
+        $orders = [];
+
+        if(Auth::check()){
+            if(Auth::user()->role == 'admin'){
+                $orders = Order::all();
+            }else{
+                $orders = Order::where('clientId',Auth::user()->id)->get();
+            }
+        }
+        return view ('orders.index', compact('orders'));
     }
 
     /**
@@ -98,8 +113,10 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Order $order)
     {
-        //
+        $order = Order::find($order -> id);
+        $order -> delete();
+        return redirect()->route('orders.index');
     }
 }

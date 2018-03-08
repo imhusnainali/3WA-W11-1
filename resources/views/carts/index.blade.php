@@ -5,7 +5,9 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3>Cart (<span id="cartContent">0</span>) </h3>
+                <h3>Cart</h3>
+
+            <!-- DISPLAY CART ELEMENT -->
                 @foreach($carts as $cart)
                     <div class="row py-3">
                         <div class="col-4">
@@ -23,10 +25,14 @@
                         </div>
                     </div>
                 @endforeach
+            <!-- END DISPLAY CART ELEMENTS -->
+
             </div>
         </div>
 
         <div class="row">
+
+        <!-- CART SUMMARY -->
             <div class="col-12">
                 <table class="table">
                     <tbody>
@@ -45,11 +51,22 @@
                     </tbody>
                 </table>
             </div>
+        <!-- END CART SUMMARY -->
 
+        <!-- CHECKOUT BUTTON -->
             <form class="col-12" action="{{ route('orders.store')}}" method="post">
                 @csrf
-                <button class="btn btn-warning col-12" type="submit">Checkout</button>
+                <button class="btn btn-warning col-12" type="submit" @if(!Auth::check()) disabled @endif>Checkout</button>
             </form>
+        <!-- END CHECKOUT BUTTON -->
+
+        <!-- DISPLAY ERROR MESSAGE IF USER IS NOT LOGGED IN -->
+            @if(!Auth::check())
+                <div class="col-12 text-center text-danger">
+                    <p>Please log-in to continue.</p>
+                </div>
+            @endif
+        <!-- END DISPLAY MESSAGE -->
 
         </div>
     </div>

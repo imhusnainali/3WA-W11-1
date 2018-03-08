@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes; // ADDING AUTH CLASS //
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Dish extends Model
 {

@@ -77,7 +77,7 @@ class DishesController extends Controller
      */
     public function edit(Dish $dish)
     {
-        //
+        return view('dishes.edit',compact('dish'));
     }
 
     /**
@@ -89,7 +89,14 @@ class DishesController extends Controller
      */
     public function update(Request $request, Dish $dish)
     {
-        //
+        Dish::where('id', $dish->id)->update([
+            'title' => $request->title,
+            'price' => $request->price,
+            'calories' => $request->calories,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('dishes.index');
     }
 
     /**

@@ -31,11 +31,18 @@
                             <a class="nav-link" href="{{ route('dishes.index') }}">Dishes</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="#">Orders</a>
+                            <a class="nav-link" href="{{ route('orders.index') }}">Orders</a>
                         </li>
                         <li>
                             <a class="nav-link" href="{{ route('reservations.index') }}">Reservations</a>
                         </li>
+
+                        <li>
+                            @if(Auth::check() && Auth::user()->role == 'admin')
+                                <a class="nav-link" href="{{ route( 'users.index') }}">Registered users</a>
+                            @endif
+                        </li>
+
                         <li>
                             <a class="nav-link" href="{{ route('contacts') }}">Contacts</a>
                         </li>
@@ -55,11 +62,6 @@
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route( 'users.edit', Auth::id() ) }}">User profile</a>
-
-                                    @if(Auth::check() && Auth::user()->role == 'admin')
-                                        <a class="dropdown-item" href="{{ route( 'users.index') }}">All registered users</a>
-                                    @endif
-
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
