@@ -21,16 +21,16 @@
                         <input type="text" name="clientId" value="{{ Auth::user()->id }}" hidden>
 
                         <div class="form-group row">
-                            <label for="date" class="col-sm-2 col-form-label">Date of visit</label>
+                            <label for="reservation_date" class="col-sm-2 col-form-label">Date of visit</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" id="date" name="date" placeholder="Resevation time">
+                                <input type="date" class="form-control" id="reservation_date" name="reservation_date" placeholder="Resevation time">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="time" class="col-sm-2 col-form-label">Time of visit</label>
+                            <label for="reservation_time" class="col-sm-2 col-form-label">Time of visit</label>
                             <div class="col-sm-10">
-                                <input type="time" class="form-control" id="time" name="time" placeholder="Resevation time">
+                                <input type="time" class="form-control" id="reservation_time" name="reservation_time" placeholder="Resevation time">
                             </div>
                         </div>
 

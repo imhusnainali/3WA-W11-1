@@ -10,9 +10,14 @@ class Order extends Model
 {
     use SoftDeletes;
 
+    // public function carts()
+    //     {
+    //         return Cart::where('orderId',$this->dishId)->get();
+    //     }
+
     public function carts()
         {
-            return Cart::where('orderId',$this->dishId)->get();
+            return $this->hasMany('App\Cart','orderId','id');
         }
 
     public function users()

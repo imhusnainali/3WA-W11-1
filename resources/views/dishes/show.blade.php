@@ -4,38 +4,11 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-6">
                 <h3>{{ $dish->title }}</h3>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-8">
                 <p>{{ $dish->description }}</p>
-            </div>
-
-            <div class="col-4">
-                <table>
-                    <tr>
-                        <td>Price:</td>
-                        <td>{{ $dish->price }} Eur</td>
-                    </tr>
-                    <tr>
-                        <td>Calories:</td>
-                        <td>{{ $dish->calories }} kCal</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                IMAGES
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
+                <p>Price: {{ $dish->price }} Eur</p>
+                <p>Calories: {{ $dish->calories }} kCal</p>
                 <form class="dishAJAX">
                     @csrf
                     <input type="text" name="dishId" value="{{ $dish->id }}" hidden>
@@ -44,8 +17,10 @@
                     <input type="submit" class="btn btn-primary" value="Add To Cart">
                 </form>
             </div>
+            <div class="col-6">
+                <img class="img-fluid" src="{{ $dish->image }}" alt="">
+            </div>
         </div>
-
     </div>
 
 @endsection

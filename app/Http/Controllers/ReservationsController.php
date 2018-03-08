@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Reservation;
 use App\Table;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // ADDING AUTH CLASS //
+use Illuminate\Support\Facades\Auth;
 
 class ReservationsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct(){
+        $this->middleware('user')->except('index');
+        $this->middleware('admin')->only('userReservations'); /* CUSTOM ROUTE TO CHECK EXACT USER RESERVATIONS */
+    }
+
     public function index()
     {
         $reservations = [];
@@ -33,91 +33,69 @@ class ReservationsController extends Controller
         return view ('reservations.index', compact('reservations'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $tables = Table::all();
         return view ('reservations.create', compact('tables'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         // CREATE NEW INSTANCE
         $reservation = new Reservation;
 
-        // VALIDATE
+        // CHECK DB IF TABLE IS TAKEN
+        $table = Reservation::where('reservedTableId',$request->reservedTableId)->where('reservation_date',$request->reservation_date)->where('reservation_time',$request->reservation_time)->first();
 
-        // ADD DATA
-        $reservation->clientId = $request->clientId;
-        $reservation->visitors = $request->visitors;
-        $reservation->reservedTableId = $request->reservedTableId;
-        $reservation->reservation_time = $request->date.' '.$request->time;;
+        if(isset($table->id)){
+            // ADD ERROR MESSAGE
+            $request->session()->flash('status', 'Sorry. This table is already reserved');
+            // REDIRECT TO INDEX ROUTE
+            return redirect()->route('reservations.index');
+        }else{
+            // ADD DATA
+            $reservation->clientId = $request->clientId;
+            $reservation->visitors = $request->visitors;
+            $reservation->reservedTableId = $request->reservedTableId;
+            $reservation->reservation_date = $request->reservation_date;
+            $reservation->reservation_time = $request->reservation_time;
 
-        // SAVE
-        $reservation->save();
+            // SAVE
+            $reservation->save();
 
-        // ADD CONFIRMATION MESSAGE
-        $request->session()->flash('status', 'Task was successful!');
+            // ADD CONFIRMATION MESSAGE
+            $request->session()->flash('status', 'Reservation was successful!');
 
-        // REDIRECT TO INDEX ROUTE
-        return redirect()->route('reservations.index');
+            // REDIRECT TO INDEX ROUTE
+            return redirect()->route('reservations.index');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Reservation  $reservation
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Reservation $reservation)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Reservation  $reservation
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Reservation $reservation)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Reservation  $reservation
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Reservation $reservation)
     {
         Reservation::where('id', $reservation->id)->update(['confirmed' => $request->confirmed]);
         return redirect()->route('reservations.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Reservation  $reservation
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Reservation $reservation)
     {
         $reservation = Reservation::find($reservation -> id);
         $reservation -> delete();
         return redirect()->route('reservations.index');
     }
+
 }

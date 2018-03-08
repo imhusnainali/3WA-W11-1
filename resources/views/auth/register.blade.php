@@ -112,7 +112,15 @@
                             <label for="country" class="col-md-4 col-form-label text-md-right">Country</label>
 
                             <div class="col-md-6">
-                                <input id="country" type="text" class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}" name="country" value="{{ old('country') }}">
+                                <select class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}" name="country" id="country">
+                                    <option disabled selected>Select Country</option>
+                                    <option value="LT">Lithuania</option>
+                                    <option value="LV">Latvia</option>
+                                    <option value="EE">Estonia</option>
+                                    <option value="PL">Poland</option>
+                                    <option value="RU">Russia</option>
+                                    <option value="UK">United Kingdom</option>
+                                </select>
 
                                 @if ($errors->has('country'))
                                     <span class="invalid-feedback">

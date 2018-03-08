@@ -11,8 +11,9 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Surname</th>
+                        <th>Phone</th>
                         <th>Email</th>
-                        <th>Role</th>
+                        <th>Adress</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -22,13 +23,21 @@
                             <td>{{ $user -> id }}</td>
                             <td>{{ $user -> name }}</td>
                             <td>{{ $user -> surname }}</td>
+                            <td>{{ $user -> phone }}</td>
                             <td>{{ $user -> email }}</td>
-                            <td>{{ $user -> role }}</td>
+                            <td>{{ $user -> address }}, {{ $user -> city }}, {{ $user -> country }}</td>
 
                             <td>
-                                <a href="reservations/{{ $user -> id }}"><button type="button" class="btn btn-warning">Reservations</button></a>
+                                <a href="reservations/{{ $user -> id }}/user"><button type="button" class="btn btn-warning">Reservations</button></a>
                                 <a href="#"><button type="button" class="btn btn-warning">Orders</button></a>
-                                <a href="{{ route('users.edit',$user -> id )}}"><button type="button" class="btn btn-warning">Profile</button></a>
+
+                                @if(Auth::user()->id != $user->id)
+                                    <form class="d-inline-block" action="{{ route('users.destroy', $user->id) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn btn-danger" type="submit" name="button">Delete</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

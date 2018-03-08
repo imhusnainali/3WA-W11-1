@@ -19,7 +19,7 @@ Route::get('/contacts', function(){
     return view('contacts');
 })->name('contacts');
 
-Route::get('/reservations/{id}', 'ReservationsController@userReservations');
+Route::get('/reservations/{id}/user', 'ReservationsController@userReservations');
 
 Route::resource('/orders', 'OrdersController');
 Route::resource('/dishes', 'DishesController');

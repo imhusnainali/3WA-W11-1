@@ -25,9 +25,9 @@
                     </div>
                 </div>
 
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
-                        <tr>
+                        <tr class="table-secondary">
                             <th>ID</th>
                             <th>Client</th>
 
@@ -41,7 +41,7 @@
                             <th>Status</th>
 
                             @if(Auth::user()->role=='admin')
-                            <th>Action</th>
+                                <th>Action</th>
                             @endif
                         </tr>
                     </thead>
@@ -66,38 +66,40 @@
                                         @endif
                                     </td>
 
-                                    <td>
-                                        <!-- DELETE RESERVATION -->
-                                            <form class="d-inline-block" action="{{ route('reservations.destroy', $reservation->id) }}" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="btn btn-danger" type="submit" name="button">Delete</button>
-                                            </form>
-                                        <!-- END DELETE RESERVATION -->
+                                    @if(Auth::user()->role=='admin')
+                                        <td>
+                                            <!-- DELETE RESERVATION -->
+                                                <form class="d-inline-block" action="{{ route('reservations.destroy', $reservation->id) }}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger" type="submit" name="button">Delete</button>
+                                                </form>
+                                            <!-- END DELETE RESERVATION -->
 
-                                        <!-- CONFIRM RESERVATION -->
-                                        @if(Auth::check() && Auth::user()->role == 'admin' && $reservation->confirmed == 0)
-                                            <form class="d-inline-block" action="{{ route('reservations.update',$reservation->id) }}" method="post">
-                                                @csrf
-                                                @method('put')
-                                                <input type="text" name="confirmed" value="1" hidden>
-                                                <button class="btn btn-success" type="submit" name="button">Confirm</button>
-                                            </form>
-                                        @endif
-                                        <!-- END CONFIRM RESERVATION -->
+                                            <!-- CONFIRM RESERVATION -->
+                                            @if($reservation->confirmed == 0)
+                                                <form class="d-inline-block" action="{{ route('reservations.update',$reservation->id) }}" method="post">
+                                                    @csrf
+                                                    @method('put')
+                                                    <input type="text" name="confirmed" value="1" hidden>
+                                                    <button class="btn btn-success" type="submit" name="button">Confirm</button>
+                                                </form>
+                                            @endif
+                                            <!-- END CONFIRM RESERVATION -->
 
-                                        <!-- REMOVE CONFIRMATION -->
-                                        @if(Auth::check() && Auth::user()->role == 'admin' && $reservation->confirmed == 1)
-                                            <form class="d-inline-block" action="{{ route('reservations.update',$reservation->id) }}" method="post">
-                                                @csrf
-                                                @method('put')
-                                                <input type="text" name="confirmed" value="0" hidden>
-                                                <button class="btn btn-warning" type="submit" name="button">Unconfirm</button>
-                                            </form>
-                                        @endif
-                                        <!-- END REMOVE CONFIRMATION -->
+                                            <!-- REMOVE CONFIRMATION -->
+                                            @if($reservation->confirmed == 1)
+                                                <form class="d-inline-block" action="{{ route('reservations.update',$reservation->id) }}" method="post">
+                                                    @csrf
+                                                    @method('put')
+                                                    <input type="text" name="confirmed" value="0" hidden>
+                                                    <button class="btn btn-warning" type="submit" name="button">Unconfirm</button>
+                                                </form>
+                                            @endif
+                                            <!-- END REMOVE CONFIRMATION -->
+                                        </td>
+                                    @endif
 
-                                    </td>
                                 </tr>
                             @endforeach
 
@@ -114,7 +116,9 @@
             <!-- ADD RESERVATION BUTTON -->
             @if(Auth::check() && Auth::user()->role != 'admin')
                 <div class="row">
-                    <a class="btn btn-secondary col-12" href="{{ route('reservations.create') }}">Add reservation</a>
+                    <div class="col-12">
+                        <a class="btn btn-secondary col-12" href="{{ route('reservations.create') }}">Add reservation</a>
+                    </div>
                 </div>
             @endif
             <!-- END ADD RESERVATION BUTTON -->

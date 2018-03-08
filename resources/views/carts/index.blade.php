@@ -11,8 +11,8 @@
                 @foreach($carts as $cart)
                     <div class="row py-3">
                         <div class="col-4">
-                            <h4>Title: {{ $cart->dishes()->title }}</h4>
-                            <p>Price: {{ $cart->dishes()->price }} Eur</p>
+                            <h4>Title: {{ $cart->dishes->title }}</h4>
+                            <p>Price: {{ $cart->dishes->price }} Eur</p>
 
                             <form action="{{ route('carts.destroy', $cart->id ) }}" method="post">
                                 @csrf
@@ -21,7 +21,7 @@
                             </form>
                         </div>
                         <div class="col-8">
-                            <p>Description: {{ $cart->dishes()->description }}</p>
+                            <p>Description: {{ $cart->dishes->description }}</p>
                         </div>
                     </div>
                 @endforeach

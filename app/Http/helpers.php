@@ -19,7 +19,7 @@
             $items = Cart::whereNull('orderId')->where('token',$token)->get();
 
             foreach($items as $item){
-                $cartSum = $cartSum + $item->dishes()->price;
+                $cartSum = $cartSum + $item->dishes->price;
             }
 
             return $cartSum;
