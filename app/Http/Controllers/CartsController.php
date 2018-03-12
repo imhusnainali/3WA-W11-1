@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartsController extends Controller
 {
@@ -24,8 +25,10 @@ class CartsController extends Controller
         $cart = new Cart;
         $cart->token = $request->_token;
         $cart->dishId = $request->dishId;
-        $cart->clientId = $request->clientId;
+        $cart->clientId = Auth::user()->id;
         $cart->save();
+
+        return $cart->dishes->price;
     }
 
     public function show(Cart $cart)

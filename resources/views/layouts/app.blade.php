@@ -31,22 +31,30 @@
                         <li>
                             <a class="nav-link" href="{{ route('dishes.index') }}">Dishes</a>
                         </li>
+
                         <li>
                             <a class="nav-link" href="{{ route('orders.index') }}">Orders</a>
                         </li>
-                        <li>
-                            <a class="nav-link" href="{{ route('reservations.index') }}">Reservations</a>
-                        </li>
 
                         <li>
-                            @if(Auth::check() && Auth::user()->role == 'admin')
-                                <a class="nav-link" href="{{ route( 'users.index') }}">Registered users</a>
-                            @endif
+                            <a class="nav-link" href="{{ route('reservations.index') }}">Reservations <span>(0)</span></a>
                         </li>
 
                         <li>
                             <a class="nav-link" href="{{ route('contacts') }}">Contacts</a>
                         </li>
+
+                        <!-- ADMIN FEATURES -->
+                            @if(Auth::check() && Auth::user()->role == 'admin')
+                                <li>
+                                    <a class="nav-link" href="{{ route('dishes.create') }}">Add dish</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="{{ route( 'users.index') }}">Registered users</a>
+                                </li>
+                            @endif
+                        <!-- END ADMIN FEATURES -->
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->

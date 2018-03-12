@@ -2,19 +2,11 @@
 $(document).ready(function(){
 
     $(".dishAJAX").submit(function(event) {
-        let price = 0;
-        let sum = Number($("#cartTotal").text());
-
         event.preventDefault();
 
-        var data = $(this).serializeArray();
+        let sum = Number($("#cartTotal").text());
 
-        for(let i = 0; i < data.length; i++){
-            if(data[i].name == 'dishPrice'){
-                price = Number(data[i].value);
-                break;
-            };
-        };
+        let data = $(this).serializeArray();
 
         // SENDING DATA WITH AJAX TO OTHER PHP
         $.ajax({
@@ -25,11 +17,11 @@ $(document).ready(function(){
                 let items = $("#cartContent").text();
                 items++;
                 $("#cartContent").text(items);
-                sum += price;
+                sum += Number(data);
                 $("#cartTotal").text(sum);
             },
             error: function(response){
-                console.log(response);
+                // console.log(response);
             },
         });
     });
