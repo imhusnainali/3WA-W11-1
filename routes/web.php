@@ -20,6 +20,7 @@ Route::get('/contacts', function(){
 })->name('contacts');
 
 Route::get('/reservations/{id}/user', 'ReservationsController@userReservations');
+Route::get('/reservations/check', 'ReservationsController@checkReservations');
 
 Route::resource('/orders', 'OrdersController');
 Route::resource('/dishes', 'DishesController');

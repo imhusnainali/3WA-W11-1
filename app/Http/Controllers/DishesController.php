@@ -32,6 +32,10 @@ class DishesController extends Controller
 
     public function store(Request $request)
     {
+
+        // VALIDATING REQUEST
+        $this->valid($request);
+
         $dish = new Dish;
 
         // UPLOAD IMAGE TO STORAGE
@@ -42,6 +46,7 @@ class DishesController extends Controller
         $dish->description = $request->description;
         $dish->price = $request->price;
         $dish->calories = $request->calories;
+        $dish->serves = $request->serves;
         $dish->image = substr_replace($image,'storage',0,6);
         $dish->save();
 
@@ -75,5 +80,16 @@ class DishesController extends Controller
         $dish = Dish::find($dish -> id);
         $dish -> delete();
         return redirect()->route('dishes.index');
+    }
+
+    private function valid($request){
+        $request->validate([
+            'title' => 'required|alpha_num|max:255',
+            'description' => 'required|alpha_num|max:1000',
+            'price' => 'required|numeric|max:3',
+            'calories' => 'required|numeric|max:3',
+            'serves' => 'required|numeric|max:3',
+            'image' => 'required',
+        ]);
     }
 }

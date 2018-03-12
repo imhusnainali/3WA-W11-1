@@ -21,9 +21,9 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="price" class="col-sm-2 col-form-label">Price</label>
+                        <label  for="price" class="col-sm-2 col-form-label">Price</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" name="price" id="price" value="{{ $dish->price }}">
+                            <input step="any" type="number" class="form-control" name="price" id="price" value="{{ $dish->price }}">
                         </div>
                     </div>
 

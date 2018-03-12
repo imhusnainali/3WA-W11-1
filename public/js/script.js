@@ -18,11 +18,38 @@ $(document).ready(function(){
                 items++;
                 $("#cartContent").text(items);
                 sum += Number(data);
-                $("#cartTotal").text(sum);
+                $("#cartTotal").text(sum.toFixed(2));
+
+                let alert = $('<div class="alert alert-warning" style="position:fixed; width:90%; left:0; right:0; z-index: 5; margin: 0 auto; top: 50px;" role="alert">');
+                alert.html('Succesfully added to cart');
+
+                alert.hide();
+                $('body .alert').remove();
+                $('body').prepend(alert.fadeIn());
             },
             error: function(response){
                 // console.log(response);
             },
         });
     });
+
+
+    checkReservations();
 });
+
+function checkReservations(){
+    setInterval(function(){
+
+        $.ajax({
+            method: "GET",
+            url: "/reservations/check",
+            success: function(data){
+                $('#reservations').html(data);
+            },
+            error: function(response){
+                // console.log(response);
+            },
+        });
+
+    },2000);
+}

@@ -33,6 +33,11 @@ class ReservationsController extends Controller
         return view ('reservations.index', compact('reservations'));
     }
 
+    public function checkReservations(){
+        $reservations = Reservation::where('confirmed','0')->count();
+        return $reservations;
+    }
+
     public function create()
     {
         $tables = Table::all();

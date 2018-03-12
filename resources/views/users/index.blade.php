@@ -5,9 +5,9 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <table class="table">
+            <table class="table table-bordered">
                 <thead>
-                    <tr>
+                    <tr class="table-secondary">
                         <th>ID</th>
                         <th>Name</th>
                         <th>Surname</th>
@@ -28,10 +28,10 @@
                             <td>{{ $user -> address }}, {{ $user -> city }}, {{ $user -> country }}</td>
 
                             <td>
-                                <a href="reservations/{{ $user -> id }}/user"><button type="button" class="btn btn-warning">Reservations</button></a>
-                                <a href="#"><button type="button" class="btn btn-warning">Orders</button></a>
+                                @if(Auth::user()->id !=     $user->id)
+                                    <a href="reservations/{{ $user -> id }}/user"><button type="button" class="btn btn-warning">Reservations</button></a>
+                                    <a href="#"><button type="button" class="btn btn-warning">Orders</button></a>
 
-                                @if(Auth::user()->id != $user->id)
                                     <form class="d-inline-block" action="{{ route('users.destroy', $user->id) }}" method="post">
                                         @csrf
                                         @method('delete')

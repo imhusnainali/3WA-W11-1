@@ -37,7 +37,7 @@
                         </li>
 
                         <li>
-                            <a class="nav-link" href="{{ route('reservations.index') }}">Reservations <span>(0)</span></a>
+                            <a class="nav-link" href="{{ route('reservations.index') }}">Reservations @if(Auth::check() && Auth::user()->role=='admin') (<span id="reservations">0</span>)@endif</a>
                         </li>
 
                         <li>
@@ -85,7 +85,7 @@
                             </li>
                         @endguest
                         <li>
-                            <a class="nav-link" href="{{ route('carts.index') }}"> Cart (<span id="cartContent"> {{ Helpers::cartTotal() }} </span>) - <span id="cartTotal">{{ Helpers::cartSum() }}</span> Eur</a>
+                            <a class="nav-link" href="{{ route('carts.index') }}"> Cart (<span id="cartContent"> {{ Helpers::cartItems() }} </span>) - <span id="cartTotal">{{ Helpers::cartSum() }}</span> Eur</a>
                         </li>
                     </ul>
                 </div>

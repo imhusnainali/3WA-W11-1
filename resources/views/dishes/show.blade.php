@@ -7,8 +7,11 @@
             <div class="col-6">
                 <h3>{{ $dish->title }}</h3>
                 <p>{{ $dish->description }}</p>
-                <p>Price: {{ $dish->price }} Eur</p>
-                <p>Calories: {{ $dish->calories }} kCal</p>
+                <ul>
+                    <li><p class="card-text">Price: {{ $dish -> price }} Eur</p></li>
+                    <li><p class="card-text">Calories: {{ $dish -> calories }} kCal</p></li>
+                    <li><p class="card-text">Servers: {{ $dish -> serves }} @if($dish -> serves == 1) person @else people @endif</p></li>
+                </ul>
 
                 @if(Auth::check() && Auth::user()->role == 'admin')
                     <a href="{{ route('dishes.edit', $dish->id)}}" >
