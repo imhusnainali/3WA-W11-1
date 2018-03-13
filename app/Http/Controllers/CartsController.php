@@ -25,7 +25,9 @@ class CartsController extends Controller
         $cart = new Cart;
         $cart->token = $request->_token;
         $cart->dishId = $request->dishId;
-        $cart->clientId = Auth::user()->id;
+        if(Auth::check()){
+            $cart->clientId = Auth::user()->id;
+        }
         $cart->save();
 
         return $cart->dishes->price;

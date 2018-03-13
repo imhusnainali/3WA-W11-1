@@ -7,6 +7,8 @@ use App\Order;
 use App\Cart;
 use Helpers;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\OrderPlaced;
+use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller
 {
@@ -61,7 +63,11 @@ class OrdersController extends Controller
 
             // ADD CONFIRMATION MESSAGE AND REDIRECT
             $request->session()->flash('status', 'Order was successful!');
-            return redirect()->route('dishes.index');
+
+            Mail::to($request->user())
+                ->send(new OrderPlaced($order));
+
+            // return redirect()->route('dishes.index');
         }
     }
 

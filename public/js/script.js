@@ -28,18 +28,17 @@ $(document).ready(function(){
                 $('body').prepend(alert.fadeIn());
             },
             error: function(response){
-                // console.log(response);
+                console.log(response);
             },
         });
     });
 
 
-    checkReservations();
+    // checkReservations();
 });
 
 function checkReservations(){
     setInterval(function(){
-
         $.ajax({
             method: "GET",
             url: "/reservations/check",
