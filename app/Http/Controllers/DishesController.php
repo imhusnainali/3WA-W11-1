@@ -89,7 +89,7 @@ class DishesController extends Controller
             'price' => 'required|numeric|max:3',
             'calories' => 'required|numeric|max:3',
             'serves' => 'required|numeric|max:3',
-            'image' => 'required',
+            'image' => 'required|mimes:jpeg,png',
         ]);
     }
 }
